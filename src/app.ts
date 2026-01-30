@@ -9,7 +9,7 @@ dotenv.config();
 // middlewares
 app.use(express.json());
 app.use(cors());
-// app.use(express.urlencoded({ extended: true }));
+
 // route
 app.get("/", (req, res, next) => {
   res.send("Hello World");
@@ -25,8 +25,8 @@ app.use((req, res, next) => {
 
 //  generic error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).send({ message: "Something broke!" });
+  console.error(err, "ee");
+  res.status(500).send({ message: "Something broke!", error: err });
 });
 
 // server connection
