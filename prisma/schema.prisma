@@ -36,3 +36,14 @@ model PickupPoint {
 
   @@map("pickup_points")
 }
+// pickup point model
+model Route {
+  id        String   @id @default(uuid())
+  name       String
+  startPoint String
+  endPoint   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("routes")
+}
