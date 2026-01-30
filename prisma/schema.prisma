@@ -76,6 +76,11 @@ model RoutePickupPoint {
 
   route       Route       @relation(fields: [routeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   pickupPoint PickupPoint @relation(fields: [pickupPointId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([routeId, pickupPointId])
+  @@unique([routeId, stopOrder])
+
+  @@map("route_pickup_point") 
 }
 
 model RouteVehicle {

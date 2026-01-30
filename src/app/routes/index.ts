@@ -4,6 +4,7 @@ import pickupPointRouter from "../modules/pickupPoint/pickupPoint.routes";
 import routeRouter from "../modules/route/route.routes";
 import transportFeeRouter from "../modules/transportFee/transportFee.routes";
 import routeVehicleRouter from "../modules/routeVehicle/routeVehicle.routes";
+import rotePickupPointRouter from "../modules/routePickupPoint/routePickupPoint.routes";
 
 const router = express.Router();
 
@@ -27,6 +28,10 @@ const moduleRouter = [
   {
     path: "/route-vehicle",
     route: routeVehicleRouter,
+  },
+  {
+    path: "/rote-pickup-point",
+    route: rotePickupPointRouter,
   },
 ];
 
