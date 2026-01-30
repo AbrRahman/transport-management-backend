@@ -12,3 +12,16 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+// vehicle model to store vehicle information
+model Vehicle {
+  id         String   @id @default(uuid())
+  vehicleNo  String   @unique
+  driverName String
+  helperName String?
+  contactNo  String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("vehicles")
+}
