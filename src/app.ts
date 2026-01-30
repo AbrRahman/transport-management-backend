@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 //  generic error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err, "ee");
-  res.status(500).send({ message: "Something broke!", error: err });
+  res.status(500).json({ message: "something wrong", error: err });
 });
 
 // server connection

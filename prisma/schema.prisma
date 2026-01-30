@@ -15,37 +15,41 @@ datasource db {
 
 // vehicle model to store vehicle information
 model Vehicle {
-  id         String   @id @default(uuid())
-  vehicleNo  String   @unique
-  driverName String
-  helperName String?
-  contactNo  String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id           String         @id @default(uuid())
+  vehicleNo    String         @unique
+  driverName   String
+  helperName   String?
+  contactNo    String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  routeVehicle RouteVehicle?
 
   @@map("vehicles")
 }
 
 // pickup point model
 model PickupPoint {
-  id        String   @id @default(uuid())
-  name      String
-  location  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String             @id @default(uuid())
+  name             String
+  location         String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  routePickupPoint RoutePickupPoint[]
 
   @@map("pickup_points")
 }
 
 // route model model
 model Route {
-  id           String        @id @default(uuid())
-  name         String
-  startPoint   String
-  endPoint     String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  transportFee TransportFee?
+  id               String             @id @default(uuid())
+  name             String
+  startPoint       String
+  endPoint         String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  transportFee     TransportFee?
+  routeVehicle     RouteVehicle?
+  routePickupPoint RoutePickupPoint[]
 
   @@map("routes")
 }
@@ -57,7 +61,29 @@ model TransportFee {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  route Route @relation(fields: [routeId], references: [id],onDelete:Cascade, onUpdate: Cascade)
+  route Route @relation(fields: [routeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("transport_fee")
+}
+
+model RoutePickupPoint {
+  id            String   @id @default(uuid())
+  routeId       String
+  pickupPointId String
+  stopOrder     Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  route       Route       @relation(fields: [routeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  pickupPoint PickupPoint @relation(fields: [pickupPointId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model RouteVehicle {
+  id        String @id @default(uuid())
+  routeId   String @unique
+  vehicleId String @unique
+
+  route   Route   @relation(fields: [routeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+@@map("route_vehicle")
 }
