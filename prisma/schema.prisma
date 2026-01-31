@@ -15,13 +15,13 @@ datasource db {
 
 // vehicle model to store vehicle information
 model Vehicle {
-  id           String         @id @default(uuid())
-  vehicleNo    String         @unique
+  id           String        @id @default(uuid())
+  vehicleNo    String        @unique
   driverName   String
   helperName   String?
   contactNo    String
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   routeVehicle RouteVehicle?
 
   @@map("vehicles")
@@ -29,27 +29,30 @@ model Vehicle {
 
 // pickup point model
 model PickupPoint {
-  id               String             @id @default(uuid())
-  name             String
-  location         String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  routePickupPoint RoutePickupPoint[]
+  id                         String                       @id @default(uuid())
+  name                       String
+  location                   String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  routePickupPoint           RoutePickupPoint[]
+  studentTransportAssignment StudentTransportAssignment[]
 
   @@map("pickup_points")
 }
 
 // route model model
 model Route {
-  id               String             @id @default(uuid())
-  name             String
-  startPoint       String
-  endPoint         String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  transportFee     TransportFee?
-  routeVehicle     RouteVehicle?
-  routePickupPoint RoutePickupPoint[]
+  id                         String                       @id @default(uuid())
+  name                       String
+  startPoint                 String
+  endPoint                   String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  transportFee               TransportFee?
+  routeVehicle               RouteVehicle?
+  routePickupPoint           RoutePickupPoint[]
+  studentFeeAssignment       StudentFeeAssignment[]
+  studentTransportAssignment StudentTransportAssignment[]
 
   @@map("routes")
 }
@@ -79,16 +82,69 @@ model RoutePickupPoint {
 
   @@unique([routeId, pickupPointId])
   @@unique([routeId, stopOrder])
-
-  @@map("route_pickup_point") 
+  @@map("route_pickup_point")
 }
 
 model RouteVehicle {
-  id        String @id @default(uuid())
-  routeId   String @unique
-  vehicleId String @unique
+  id        String   @id @default(uuid())
+  routeId   String   @unique
+  vehicleId String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   route   Route   @relation(fields: [routeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-@@map("route_vehicle")
+
+  @@map("route_vehicle")
+}
+
+// sample student model
+model Student {
+  id                         String                       @id @default(uuid())
+  name                       String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  studentTransportAssignment StudentTransportAssignment[]
+  studentFeeAssignment       StudentFeeAssignment[]
+
+  @@map("students")
+}
+
+model StudentTransportAssignment {
+  id            String   @id @default(uuid())
+  studentId     String
+  routeId       String
+  pickupPointId String
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  student     Student     @relation(fields: [studentId], references: [id],onDelete: Cascade, onUpdate: Cascade)
+  route       Route       @relation(fields: [routeId], references: [id],onDelete: Cascade, onUpdate: Cascade)
+  pickupPoint PickupPoint @relation(fields: [pickupPointId], references: [id],onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([studentId, isActive])
+  @@map("student_transport_assignment")
+}
+
+model StudentFeeAssignment {
+  id        String   @id @default(uuid())
+  studentId String
+  routeId   String
+  amount    Int
+  month     Int      
+  status    Status   @default(UNPAID)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id],onDelete: Cascade, onUpdate: Cascade)
+  route   Route   @relation(fields: [routeId], references: [id],onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([studentId, routeId, month])
+  @@map("student_fee_assignment")
+}
+
+enum Status {
+  PAID
+  UNPAID
 }

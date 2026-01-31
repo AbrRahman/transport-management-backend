@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import router from "./app/routes";
+import { seedStudent } from "./db/seed";
 const app = express();
 
 dotenv.config();
@@ -28,6 +29,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err, "ee");
   res.status(500).json({ message: "something wrong", error: err });
 });
+
+// seed student
+seedStudent();
 
 // server connection
 const PORT = process.env.PORT || 3000;
