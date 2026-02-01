@@ -18,7 +18,17 @@ const createTransportFee = async (payload: TransportFee) => {
 
 // get all transport fee
 const getAllTransportFee = async () => {
-  const result = await prisma.transportFee.findMany();
+  const result = await prisma.transportFee.findMany({
+    include: {
+      route: {
+        select: {
+          name: true,
+          startPoint: true,
+          endPoint: true,
+        },
+      },
+    },
+  });
   return result;
 };
 

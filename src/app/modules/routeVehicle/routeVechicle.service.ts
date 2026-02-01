@@ -31,10 +31,12 @@ const getAllRouteVehicle = async () => {
         select: {
           vehicleNo: true,
           driverName: true,
+          contactNo: true,
         },
       },
     },
   });
+
   return result;
 };
 
@@ -48,9 +50,31 @@ const deleteRouteVehicleById = async (id: string) => {
   return result;
 };
 
+// get all unassigned route form routeVehicle
+const getAllUnassignedRoute = async () => {
+  const result = await prisma.route.findMany({
+    where: {
+      routeVehicle: null,
+    },
+  });
+  return result;
+};
+
+// get all unassigned vehicle form routeVehicle
+const getAllUnassignedVehicle = async () => {
+  const result = await prisma.vehicle.findMany({
+    where: {
+      routeVehicle: null,
+    },
+  });
+  return result;
+};
+
 const routeVehicleService = {
   insertRouteVehicle,
   getAllRouteVehicle,
   deleteRouteVehicleById,
+  getAllUnassignedRoute,
+  getAllUnassignedVehicle,
 };
 export default routeVehicleService;

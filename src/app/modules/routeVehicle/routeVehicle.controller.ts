@@ -32,10 +32,33 @@ const deleteRouteVehicle = catchAsync(async (req, res, next) => {
   });
 });
 
+// get all unassigned route
+const getAllUnassignedRoute = catchAsync(async (req, res, next) => {
+  const result = await routeVehicleService.getAllUnassignedRoute();
+
+  res.status(status.OK).json({
+    success: true,
+    message: "UnassignedRoute fetched successfully",
+    data: result,
+  });
+});
+// get all unassigned vehicle
+const getAllUnassignedVehicle = catchAsync(async (req, res, next) => {
+  const result = await routeVehicleService.getAllUnassignedVehicle();
+
+  res.status(status.OK).json({
+    success: true,
+    message: "Unassigned Vehicle fetched successfully",
+    data: result,
+  });
+});
+
 const routeVehicleController = {
   insertRouteVehicle,
   getAllRouteVehicle,
   deleteRouteVehicle,
+  getAllUnassignedRoute,
+  getAllUnassignedVehicle,
 };
 
 export default routeVehicleController;

@@ -9,10 +9,10 @@ dotenv.config();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5174", credentials: true }));
 
 // route
-app.get("/", (req, res, next) => {
+http: app.get("/", (req, res, next) => {
   res.send("Hello World");
 });
 
@@ -26,8 +26,23 @@ app.use((req, res, next) => {
 
 //  generic error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err, "ee");
-  res.status(500).json({ message: "something wrong", error: err });
+  let statusCode = 500;
+  let message = "Internal Server Error";
+  let errorSources = err;
+
+  if (err.name === "PrismaClientKnownRequestError") {
+    statusCode = 400;
+    message = "Database Operation Failed";
+  } else if (err instanceof Error) {
+    message = err.message;
+  }
+
+  res.status(statusCode).json({
+    success: false,
+    message,
+    error: errorSources,
+    stack: process.env.NODE_ENV === "development" ? err.stack : null,
+  });
 });
 
 // seed student

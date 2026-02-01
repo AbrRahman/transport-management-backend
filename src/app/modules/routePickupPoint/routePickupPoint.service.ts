@@ -14,6 +14,7 @@ const getAllRoutePickupPoint = async () => {
       route: {
         select: {
           name: true,
+          endPoint: true,
         },
       },
       pickupPoint: {

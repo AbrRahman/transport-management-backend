@@ -6,6 +6,7 @@ import transportFeeRouter from "../modules/transportFee/transportFee.routes";
 import routeVehicleRouter from "../modules/routeVehicle/routeVehicle.routes";
 import rotePickupPointRouter from "../modules/routePickupPoint/routePickupPoint.routes";
 import studentTransport from "../modules/studentTransport/studentTransport.routes";
+import studentRouter from "../modules/student/student";
 
 const router = express.Router();
 
@@ -31,6 +32,10 @@ const moduleRouter = [
     route: routeVehicleRouter,
   },
   {
+    path: "/student",
+    route: studentRouter,
+  },
+  {
     path: "/rote-pickup-point",
     route: rotePickupPointRouter,
   },
@@ -43,3 +48,5 @@ const moduleRouter = [
 moduleRouter.forEach(({ path, route }) => router.use(path, route));
 
 export default router;
+
+//
