@@ -7,7 +7,15 @@ const router = express.Router();
 router.get(
   "/",
   catchAsync(async (req, res, next) => {
-    const result = await prisma.student.findMany();
+    const result = await prisma.student.findMany({
+      where: {
+        studentTransportAssignment: {
+          none: {
+            isActive: true,
+          },
+        },
+      },
+    });
     res.status(200).json({
       success: true,
       message: "Student fetched successfully",

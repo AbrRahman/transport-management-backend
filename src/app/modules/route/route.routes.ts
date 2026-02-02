@@ -6,6 +6,7 @@ router.post("/", routeController.createRoute);
 router.get("/", routeController.getAllRoutes);
 router.put("/:id", routeController.updateRoute);
 router.delete("/:id", routeController.deleteRoute);
+router.get("/unassign-fee", routeController.findRouteByUnassignedTransferFee);
 
 const routeRouter = router;
 export default routeRouter;

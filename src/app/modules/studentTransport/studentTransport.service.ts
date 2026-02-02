@@ -1,3 +1,4 @@
+import { isAbsolute } from "node:path";
 import { prisma } from "../../../lib/prisma";
 import { TTransportAssignment } from "./studentTransport.interface";
 
@@ -79,6 +80,33 @@ const getAllStudentTransportAssign = async () => {
     orderBy: {
       createdAt: "desc",
     },
+    include: {
+      student: {
+        select: {
+          name: true,
+        },
+      },
+      route: {
+        select: {
+          name: true,
+          endPoint: true,
+          routeVehicle: {
+            select: {
+              vehicle: {
+                select: {
+                  vehicleNo: true,
+                },
+              },
+            },
+          },
+        },
+      },
+      pickupPoint: {
+        select: {
+          name: true,
+        },
+      },
+    },
   });
   return result;
 };
@@ -89,6 +117,43 @@ const getAllStudentTransportFee = async () => {
     orderBy: {
       createdAt: "desc",
     },
+    include: {
+      student: {
+        select: {
+          name: true,
+        },
+      },
+      route: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+  return result;
+};
+// delete transport transport assignment
+const deleteStudentTransportAssign = async (id: string) => {
+  const result = await prisma.studentTransportAssignment.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+// update route by id
+const toggleUpdateStudentTransportBaseOnActive = async (id: string) => {
+  const current = await prisma.studentTransportAssignment.findUnique({
+    where: { id },
+    select: { isActive: true },
+  });
+  const result = await prisma.studentTransportAssignment.update({
+    where: {
+      id,
+    },
+    data: {
+      isActive: !current?.isActive,
+    },
   });
   return result;
 };
@@ -97,6 +162,8 @@ const studentTransportService = {
   studentTransportAssignment,
   getAllStudentTransportAssign,
   getAllStudentTransportFee,
+  deleteStudentTransportAssign,
+  toggleUpdateStudentTransportBaseOnActive,
 };
 
 export default studentTransportService;

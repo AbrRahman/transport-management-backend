@@ -41,11 +41,21 @@ const deleteRoute = catchAsync(async (req, res, next) => {
   });
 });
 
+const findRouteByUnassignedTransferFee = catchAsync(async (req, res, next) => {
+  const result = await routeService.findRouteByUnassignedTransferFee();
+
+  res.status(status.OK).json({
+    success: true,
+    message: "unassign transfer fee Route fetched  successfully",
+    data: result,
+  });
+});
 const routeController = {
   createRoute,
   getAllRoutes,
   updateRoute,
   deleteRoute,
+  findRouteByUnassignedTransferFee,
 };
 
 export default routeController;

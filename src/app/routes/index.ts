@@ -36,7 +36,7 @@ const moduleRouter = [
     route: studentRouter,
   },
   {
-    path: "/rote-pickup-point",
+    path: "/route-pickup-point",
     route: rotePickupPointRouter,
   },
   {

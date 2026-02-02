@@ -38,11 +38,22 @@ const deleteRouteById = async (id: string) => {
   return result;
 };
 
+// find route by un assigned transfer fee
+const findRouteByUnassignedTransferFee = async () => {
+  const result = await prisma.route.findMany({
+    where: {
+      transportFee: null,
+    },
+  });
+  return result;
+};
+
 const routeService = {
   createRoute,
   getAllRoutes,
   updateRouteById,
   deleteRouteById,
+  findRouteByUnassignedTransferFee,
 };
 
 export default routeService;
