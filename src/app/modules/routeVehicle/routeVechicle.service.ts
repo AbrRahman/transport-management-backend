@@ -20,6 +20,9 @@ const insertRouteVehicle = async (payload: TRouteVehicle) => {
 
 const getAllRouteVehicle = async () => {
   const result = await prisma.routeVehicle.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       route: {
         select: {

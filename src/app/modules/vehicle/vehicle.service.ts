@@ -11,7 +11,19 @@ const createVehicle = async (payload: TVehicle) => {
 
 // get all vehicles
 const getAllVehicles = async () => {
-  const result = await prisma.vehicle.findMany();
+  const result = await prisma.vehicle.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return result;
+};
+
+// get single vehicle by id
+const getSingleVehicle = async (id: string) => {
+  const result = await prisma.vehicle.findFirst({
+    where: { id },
+  });
   return result;
 };
 
@@ -41,6 +53,7 @@ const deleteVehicleById = async (id: string) => {
 const vehicleService = {
   createVehicle,
   getAllVehicles,
+  getSingleVehicle,
   updateVehicleById,
   deleteVehicleById,
 };

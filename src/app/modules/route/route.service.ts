@@ -11,12 +11,16 @@ const createRoute = async (payload: TRoute) => {
 
 // get all routes
 const getAllRoutes = async () => {
-  const result = await prisma.route.findMany();
+  const result = await prisma.route.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
   return result;
 };
 // get single single by id
 const getSingleRoute = async (id: string) => {
-  const result = await prisma.pickupPoint.findFirst({
+  const result = await prisma.route.findFirst({
     where: { id },
   });
   return result;

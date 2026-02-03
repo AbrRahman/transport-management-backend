@@ -11,7 +11,11 @@ const createPickupPoint = async (payload: TPickupPoint) => {
 
 // get all pickup point
 const getAllPickupPoints = async () => {
-  const result = await prisma.pickupPoint.findMany();
+  const result = await prisma.pickupPoint.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
   return result;
 };
 

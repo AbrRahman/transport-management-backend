@@ -16,6 +16,17 @@ const getAllVehicles = catchAsync(async (req, res, next) => {
 
   res.status(status.OK).json({
     success: true,
+    message: "Vehicles fetched successfully",
+    data: result,
+  });
+});
+
+const getSingleVehicle = catchAsync(async (req, res, next) => {
+  const id = req?.params?.id as string;
+  const result = await vehicleService.getSingleVehicle(id);
+
+  res.status(status.OK).json({
+    success: true,
     message: "Vehicle fetched successfully",
     data: result,
   });
@@ -44,6 +55,7 @@ const deleteVehicle = catchAsync(async (req, res, next) => {
 const vehicleCOntroller = {
   createVehicle,
   getAllVehicles,
+  getSingleVehicle,
   updateVehicle,
   deleteVehicle,
 };

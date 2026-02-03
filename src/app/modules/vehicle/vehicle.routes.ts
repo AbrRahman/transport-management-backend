@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.post("/", vehicleCOntroller.createVehicle);
 router.get("/", vehicleCOntroller.getAllVehicles);
+router.get("/:id", vehicleCOntroller.getSingleVehicle);
 router.put("/:id", vehicleCOntroller.updateVehicle);
 router.delete("/:id", vehicleCOntroller.deleteVehicle);
 
