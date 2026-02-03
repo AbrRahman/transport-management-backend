@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.post("/", transportFeeController.createTransportFee);
 router.get("/", transportFeeController.getAllTransportFee);
+router.get("/:id", transportFeeController.getSingleTransportFee);
 router.put("/:id", transportFeeController.updateTransportFee);
 router.delete("/:id", transportFeeController.deleteTransportFee);
 

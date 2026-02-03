@@ -15,6 +15,31 @@ const getAllRoutes = async () => {
   return result;
 };
 
+// get route with stops
+const getRoutesWithStops = async () => {
+  const result = await prisma.route.findMany({
+    select: {
+      name: true,
+      endPoint: true,
+      id: true,
+      routePickupPoint: {
+        orderBy: {
+          stopOrder: "asc",
+        },
+        select: {
+          stopOrder: true,
+          id: true,
+          pickupPoint: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  return result;
+};
 // update route by id
 const updateRouteById = async (id: string, payload: Partial<TRoute>) => {
   const result = await prisma.route.update({
@@ -54,6 +79,7 @@ const routeService = {
   updateRouteById,
   deleteRouteById,
   findRouteByUnassignedTransferFee,
+  getRoutesWithStops,
 };
 
 export default routeService;

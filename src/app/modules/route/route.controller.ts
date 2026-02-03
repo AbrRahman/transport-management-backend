@@ -20,6 +20,18 @@ const getAllRoutes = catchAsync(async (req, res, next) => {
     data: result,
   });
 });
+
+// get routes with stops
+const getRoutesWithStops = catchAsync(async (req, res, next) => {
+  const result = await routeService.getRoutesWithStops();
+
+  res.status(status.OK).json({
+    success: true,
+    message: "Routes with stop fetched successfully",
+    data: result,
+  });
+});
+
 const updateRoute = catchAsync(async (req, res, next) => {
   const id = req?.params?.id as string;
   const result = await routeService.updateRouteById(id, req?.body);
@@ -56,6 +68,7 @@ const routeController = {
   updateRoute,
   deleteRoute,
   findRouteByUnassignedTransferFee,
+  getRoutesWithStops,
 };
 
 export default routeController;

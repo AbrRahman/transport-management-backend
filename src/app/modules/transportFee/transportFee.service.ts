@@ -31,6 +31,22 @@ const getAllTransportFee = async () => {
   });
   return result;
 };
+// get single transport fee
+const getSingleTransportFee = async (id: string) => {
+  const result = await prisma.transportFee.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      route: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+  return result;
+};
 
 // update transport fee by id
 const updateTransportFeeById = async (
@@ -70,6 +86,7 @@ const deleteTransportFeeById = async (id: string) => {
 const transportFeeService = {
   createTransportFee,
   getAllTransportFee,
+  getSingleTransportFee,
   updateTransportFeeById,
   deleteTransportFeeById,
 };
