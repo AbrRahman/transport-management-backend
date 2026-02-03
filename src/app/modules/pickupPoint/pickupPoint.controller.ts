@@ -20,6 +20,18 @@ const getAllPickupPoints = catchAsync(async (req, res, next) => {
     data: result,
   });
 });
+
+// get single pickup point
+const getSinglePickupPoint = catchAsync(async (req, res, next) => {
+  const id = req?.params?.id as string;
+  const result = await pickupPointService.getSinglePickupPoint(id);
+
+  res.status(status.OK).json({
+    success: true,
+    message: "Pickup Point fetched successfully",
+    data: result,
+  });
+});
 const updatePickupPoint = catchAsync(async (req, res, next) => {
   const id = req?.params?.id as string;
   const result = await pickupPointService.updatePickupPointById(id, req?.body);
@@ -44,6 +56,7 @@ const deletePickupPoint = catchAsync(async (req, res, next) => {
 const pickupPointController = {
   createPickupPoint,
   getAllPickupPoints,
+  getSinglePickupPoint,
   updatePickupPoint,
   deletePickupPoint,
 };

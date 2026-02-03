@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.post("/", routeController.createRoute);
 router.get("/", routeController.getAllRoutes);
+router.get("/:id", routeController.getSIngleRoute);
 router.get("/stop-watch", routeController.getRoutesWithStops);
 router.put("/:id", routeController.updateRoute);
 router.delete("/:id", routeController.deleteRoute);

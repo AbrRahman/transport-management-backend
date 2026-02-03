@@ -64,7 +64,8 @@ const updateTransportFeeById = async (
       throw new Error("This route already transport fee added");
     }
   }
-  const result = await prisma.vehicle.update({
+
+  const result = await prisma.transportFee.update({
     where: {
       id,
     },

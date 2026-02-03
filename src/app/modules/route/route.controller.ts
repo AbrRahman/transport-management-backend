@@ -21,6 +21,18 @@ const getAllRoutes = catchAsync(async (req, res, next) => {
   });
 });
 
+// get single routes
+const getSIngleRoute = catchAsync(async (req, res, next) => {
+  const id = req?.params?.id as string;
+  const result = await routeService.getSingleRoute(id);
+
+  res.status(status.OK).json({
+    success: true,
+    message: "Single route fetched successfully",
+    data: result,
+  });
+});
+
 // get routes with stops
 const getRoutesWithStops = catchAsync(async (req, res, next) => {
   const result = await routeService.getRoutesWithStops();
@@ -32,6 +44,7 @@ const getRoutesWithStops = catchAsync(async (req, res, next) => {
   });
 });
 
+// update route
 const updateRoute = catchAsync(async (req, res, next) => {
   const id = req?.params?.id as string;
   const result = await routeService.updateRouteById(id, req?.body);
@@ -42,6 +55,8 @@ const updateRoute = catchAsync(async (req, res, next) => {
     data: result,
   });
 });
+
+// delete route
 const deleteRoute = catchAsync(async (req, res, next) => {
   const id = req?.params?.id as string;
   const result = await routeService.deleteRouteById(id);
@@ -58,13 +73,14 @@ const findRouteByUnassignedTransferFee = catchAsync(async (req, res, next) => {
 
   res.status(status.OK).json({
     success: true,
-    message: "unassign transfer fee Route fetched  successfully",
+    message: "Unassign transfer fee Route fetched  successfully",
     data: result,
   });
 });
 const routeController = {
   createRoute,
   getAllRoutes,
+  getSIngleRoute,
   updateRoute,
   deleteRoute,
   findRouteByUnassignedTransferFee,

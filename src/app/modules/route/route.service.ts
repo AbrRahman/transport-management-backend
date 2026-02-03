@@ -14,6 +14,13 @@ const getAllRoutes = async () => {
   const result = await prisma.route.findMany();
   return result;
 };
+// get single single by id
+const getSingleRoute = async (id: string) => {
+  const result = await prisma.pickupPoint.findFirst({
+    where: { id },
+  });
+  return result;
+};
 
 // get route with stops
 const getRoutesWithStops = async () => {
@@ -76,6 +83,7 @@ const findRouteByUnassignedTransferFee = async () => {
 const routeService = {
   createRoute,
   getAllRoutes,
+  getSingleRoute,
   updateRouteById,
   deleteRouteById,
   findRouteByUnassignedTransferFee,
