@@ -50,7 +50,7 @@ Create a **.env** file in the root:
 ```
 DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/transport_db?schema=public"
 PORT=3000
-CLIENT_URL:CLIENT_URL=http://localhost:5173 or frontend url
+CLIENT_URL=http://localhost:5173 or frontend url
 ```
 
 ### 4. Database Initialization
