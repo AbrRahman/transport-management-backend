@@ -153,7 +153,7 @@ npm run start:dev
 
 | Method | Endpoint                                | Description                                       |
 | ------ | --------------------------------------- | ------------------------------------------------- |
-| POST   | `/student-transport/student-assign`     | Assign a student to a route and pickup point      |
+| POST   | `/student-transport/student-assign`     | Assign a student to a route and pickup point and auto fee generation      |
 | GET    | `/student-transport/student-assign`     | Get all student transport assignments             |
 | PUT    | `/student-transport/student-assign/:id` | Toggle (Active/Inactive) student transport status |
 | DELETE | `/student-transport/student-assign/:id` | Delete student transport assignment               |
